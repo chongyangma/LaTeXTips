@@ -1,0 +1,22 @@
+\definecolor{ChongyangColor}{rgb}{0.7,0,0}
+\newcommand{\chongyang}[1]{{\color{ChongyangColor} Chongyang: #1}}
+\newcommand{\note}[1]{{\it\color{blue} #1}}
+\newcommand{\filename}[1]{{\color{blue}\em #1}}
+\newcommand{\commentout}[1]{}
+
+\newcommand{\psdraftboxDefault}{\psnodraftbox}
+
+\ifthenelse{\equal{\final}{1}}
+{
+\renewcommand{\chongyang}[1]{}
+\renewcommand{\note}[1]{}
+}
+{}
+
+\DefineVerbatimEnvironment{latexexample}
+{Verbatim}
+{fontsize=\normalsize,formatcom=\color{red}}
+
+\hyphenpenalty=1000 % magic number to reduce ugly line breaks
+
+\linespread{1.1}

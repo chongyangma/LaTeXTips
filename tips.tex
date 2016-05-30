@@ -1,0 +1,55 @@
+\section{LaTeX Source}
+\label{sec:source}
+
+\subsection{Source Files}
+
+Writing paper using LaTeX for a project is just like coding. Therefore, it is usually helpful to maintain the LaTeX source files following some coding standards.
+I suggest to keep the LaTeX source of each section as an individual file. This will make the file/section organization clearer and can facilitate the search of a certain part of LaTeX source.
+I even put the LaTeX source of each figure into an individual file. This is particularly useful when I need to tweak the figure location and layout.
+
+It is also helpful to separate the LaTeX source of each paragraph into multiple lines with hard returns, instead of using SPACE to separate sentences or relying on any text editor.
+The compiled pdf file will look the same in both ways, but the former makes it much easier for most version control tools to track changes and thus avoid potential conflict when several coauthors happen to work on the same part.
+
+\subsection{Math Symbols}
+
+It is recommended to define math symbols using ``\verb|\newcommand|''.
+For example, instead of using ``\verb|\mathbf{p}|'' everywhere for a vector representing a position, I will first declare a ``position'' command in \filename{symbols.tex} as below:
+\begin{latexexample}
+\newcommand{\position}{\mathbf{p}}
+\end{latexexample}
+Then I will use ``\verb|\position|'' in the main text.
+This way of symbol declaration can make the LaTeX source more intuitive to understand/edit and will make it much easier to change the forms of these symbols.
+
+\subsection{Comments and Notes}
+
+During the process of paper writing, it is usually desirable to add some comments and notes into the paper draft to help communication between coauthors, which should not appear in the final submission/publication.
+One simple way to achieve this goal is to define two versions of the paper. See \filename{draft.tex} and \filename{final.tex} for concrete examples.
+In \filename{draft.tex}, we have:
+\begin{latexexample}
+\newcommand{\final}{0}
+\input{paper}
+\end{latexexample}
+while \filename{final.tex} contains the following LaTeX source:
+\begin{latexexample}
+\newcommand{\final}{1}
+\input{paper}
+\end{latexexample}
+Both of these two files include the same LaTeX source \filename{paper.tex} as the main text of the paper. The only difference between these two files is the value of the command ``\verb|\final|'', one is $0$ while the other is $1$.
+Compiling \filename{draft.tex} will generate the version with comments and notes for internal use (see the Blog section at the end of the compiled \filename{draft.pdf}), while compiling \filename{final.tex} will generate the version for submission/publication without comments and notes.
+The trick here is to define and redefine certain commands in \filename{macros.tex}, such as ``\verb|\note|'', based on the value of command ``\verb|\final|'' as follows:
+\begin{latexexample}
+\newcommand{\note}[1]{{\it\color{blue} #1}}
+\ifthenelse{\equal{\final}{1}}
+{
+\renewcommand{\note}[1]{}
+}
+{}
+\end{latexexample}
+Then we can use ``\verb|\note{some comments}|'' to add some internal comments into the paper, which will be visible only in the draft mode.
+
+\subsection{BibTeX Items}
+
+One of the most common mistakes about a list of BibTeX items is duplicated entries.
+To reduce the chance of having duplicated entries, I always keep the items in a chronological order with a unified and informative format for the entry names. Specifically, I follow the BibTeX naming convention in the ACM Digital Library but remove the doi string to keep it short.
+Then the entry name of a reference will be something like ``XXX:YYYY:ABC'', where ``XXX'' is the last name of the first author, ``YYYY'' is the publication year, and ``ABC'' is an abbreviation of the paper title. For example, the bib entry name of \cite{Ma:2011:DET} will be ``Ma:2011:DET''.
+See \filename{paper.bib} for some concrete examples.
