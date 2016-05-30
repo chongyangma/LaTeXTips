@@ -2,7 +2,13 @@
 \newcommand{\chongyang}[1]{{\color{ChongyangColor} Chongyang: #1}}
 \newcommand{\note}[1]{{\it\color{blue} #1}}
 \newcommand{\filename}[1]{{\color{blue}\em #1}}
-\newcommand{\commentout}[1]{}
+\newcommand{\commentout}[1]{} % this command is used to comment out multiple lines easily
+
+\commentout{
+These lines
+won't appear
+in the compile output.
+}%commentout
 
 \newcommand{\psdraftboxDefault}{\psnodraftbox}
 
@@ -19,4 +25,4 @@
 
 \hyphenpenalty=1000 % magic number to reduce ugly line breaks
 
-\linespread{1.1}
+\linespread{1.1} % this line should be commented out to follow the format standards of SIGGRAPH submission/publication
